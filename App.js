@@ -9,6 +9,9 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './Screens/Login';
 import Signup from './Screens/Signup';
 import Attendance from './Screens/Attendance';
+import Admin from './Screens/Admin';
+import Student_Signup from './Screens/Student_Siignup';
+import Teacher_signup from './Screens/Teacher_signup';
 
 
 
@@ -19,13 +22,17 @@ function App() {
   
   return (
   <NavigationContainer>
-     <Stack.Navigator initialRouteName='Signup'>
+     <Stack.Navigator initialRouteName='Login'>
       <Stack.Screen  name="Login" component={Login} options={{title: 'Welcome Back'}}/>
       <Stack.Screen  name="Signup" component={Signup} options={{title: 'Welcome'}}/>
       <Stack.Screen  name="Attendance" component={Attendance} options={{title: 'Attendance'}}/>
+      <Stack.Screen name="Admin" component={Admin} />
+      <Stack.Screen name="Student_Signup" component={Student_Signup} />
+      <Stack.Screen name="Teacher_signup" component={Teacher_signup} />
     </Stack.Navigator>
 
   </NavigationContainer>
+  // <Admin/>
   // <Signup/>
   );
 }
@@ -35,7 +42,7 @@ export default App;
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    justifyContent:"center",
+    // justifyContent:"center",
     // alignItems:"center",
     
   },
