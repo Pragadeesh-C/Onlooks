@@ -1,14 +1,17 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View,TextInput,TouchableOpacity} from 'react-native';
 import React from 'react';
+import {useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 const Teacher_signup = () => {
+    const [emailID, setemailID] = useState('');
+    const [password, setpassword] = useState('');
   const fb = id => {
     firestore()
       .collection('Users')
       .add({
-        id: id + '@teacher',
+        id: id,
         role: 'teacher',
         stat: 0,
       })
@@ -17,34 +20,75 @@ const Teacher_signup = () => {
       });
   };
 
-  function generateRandomId() {
-    const chars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let result = '';
-    for (let i = 0; i < 10; i++) {
-      result += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return result;
-  }
-
   const LoginAuth = async () => {
     await auth()
       .createUserWithEmailAndPassword(emailID, password)
       .then(() => {
         console.log('User added!');
-        fb(generateRandomId());
+        fb(emailID);
       });
 
-    navigation.navigate('Login', {name: 'Login'});
+    // navigation.navigate('Login', {name: 'Login'});
     console.log(auth().currentUser?.email);
   };
   return (
     <View>
-      <Text>Teacher_signup</Text>
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <Text
+            style={{
+              fontSize: 24,
+              marginTop: 100,
+              textAlign: 'center',
+              justifyContent: 'center',
+            }}>
+            Signup
+          </Text>
+          <TextInput
+            placeholder="Email"
+            value={emailID}
+            onChangeText={Text => setemailID(Text)}
+            style={{
+              height: 40,
+              borderColor: 'gray',
+              borderWidth: 1,
+              marginTop: 70,
+              marginHorizontal: 10,
+            }}
+          />
+          <TextInput
+            placeholder="Password"
+            value={password}
+            onChangeText={Text => setpassword(Text)}
+            secureTextEntry={true}
+            style={{
+              height: 40,
+              borderColor: 'gray',
+              borderWidth: 1,
+              marginTop: 40,
+              marginHorizontal: 10,
+            }}
+          />
+          <TouchableOpacity style={styles.button} onPress={LoginAuth}>
+            <Text style={{color: 'white', fontSize: 15}}>SignUp</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
     </View>
   );
 };
 
 export default Teacher_signup;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    button: {
+        height: 50,
+        width: 400,
+        backgroundColor: 'blue',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+        marginLeft: 5,
+        marginTop: 40,
+      },
+});

@@ -16,16 +16,20 @@ const Login = ({navigation}) => {
   const [password, setpassword] = useState('');
 
   const LoginAuth = async () => {
+    console.log("Hi")
     firestore()
       .collection('Users')
       .where('id', 'in', [userid])
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(snapshot => {
-          if (snapshot.role == 'student') {
-            navigation.navigate('');
+          console.log("In", snapshot)
+          if (snapshot.data().role == 'student') {
+            console.log("Student")
+            navigation.navigate('Profile',{name:'Profile'});
           } else {
-            navigation.navigate('');
+            console.log("Tecxher")
+            navigation.navigate('Attendance',{name:'Attendance'});
           }
         });
       });
@@ -68,16 +72,10 @@ const Login = ({navigation}) => {
             marginHorizontal: 10,
           }}
         />
-        <View style={{flexDirection: 'row'}}>
           <TouchableOpacity style={styles.button} onPress={LoginAuth}>
             <Text style={{color: 'white', fontSize: 15}}>Login</Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Signup', {name: 'Signup'})}>
-            <Text style={{color: 'white', fontSize: 15}}>Signup</Text>
-          </TouchableOpacity>
-        </View>
+          
       </View>
     </View>
   );
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
   button: {
     height: 50,
-    width: 200,
+    width: 400,
     backgroundColor: 'blue',
     alignItems: 'center',
     justifyContent: 'center',

@@ -21,6 +21,13 @@ const Admin = ({navigation}) => {
         }>
         <Text style={styles.text}>Create Teacher</Text>
       </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate('Login', {name: 'Login'})
+        }>
+        <Text style={styles.text}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
