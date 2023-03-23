@@ -11,18 +11,18 @@ import {getFirestore} from 'firebase/firestore';
 import firestore from '@react-native-firebase/firestore';
 import {useState} from 'react';
 import auth from '@react-native-firebase/auth';
-import React, { useEffect} from 'react';
+import React, {useEffect} from 'react';
 
 const Signup = ({navigation}) => {
   const [emailID, setemailID] = useState('');
   const [password, setpassword] = useState('');
 
-  const fb = (id) => {
-    console.log("Hi")
+  const fb = id => {
+    console.log('Hi');
     firestore()
       .collection('Users')
       .add({
-        id: id+'@student',
+        id: id + '@student',
         role: 'student',
         stat: 0,
       })
@@ -32,14 +32,15 @@ const Signup = ({navigation}) => {
   };
 
   function generateRandomId() {
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const chars =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
     for (let i = 0; i < 10; i++) {
       result += chars.charAt(Math.floor(Math.random() * chars.length));
     }
     return result;
   }
-  
+
   const LoginAuth = async () => {
     await auth()
       .createUserWithEmailAndPassword(emailID, password)
@@ -51,7 +52,7 @@ const Signup = ({navigation}) => {
     navigation.navigate('Login', {name: 'Login'});
     console.log(auth().currentUser?.email);
   };
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
