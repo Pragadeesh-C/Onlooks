@@ -13,8 +13,6 @@ const Admin = ({navigation}) => {
       <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Teacher_signup',{name:"Teacher_signup"})}>
         <Text style={styles.text}>Create Teacher</Text>
       </TouchableOpacity>
-      
-
     </View>
   )
 }

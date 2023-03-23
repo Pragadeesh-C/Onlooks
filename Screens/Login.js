@@ -12,9 +12,7 @@ const Login = ( {navigation}) => {
     await auth().signInWithEmailAndPassword(emailID,password)
     navigation.navigate('Attendance',{name:'Attendance'})
     console.log(auth().currentUser?.email)
-    
   }
-
 
   return (
     <View style={styles.container}>

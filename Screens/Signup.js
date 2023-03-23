@@ -17,36 +17,41 @@ const Signup = ({navigation}) => {
   const [emailID, setemailID] = useState('');
   const [password, setpassword] = useState('');
 
-  const fb = () => {
+  const fb = (id) => {
     console.log("Hi")
     firestore()
       .collection('Users')
       .add({
-        name: 'Ada Lovelace',
-        age: 30,
+        id: id+'@student',
+        role: 'student',
+        stat: 0,
       })
       .then(() => {
         console.log('User added!');
       });
   };
 
+  function generateRandomId() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < 10; i++) {
+      result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return result;
+  }
+  
   const LoginAuth = async () => {
     await auth()
       .createUserWithEmailAndPassword(emailID, password)
       .then(() => {
         console.log('User added!');
-        fb();
+        fb(generateRandomId());
       });
 
     navigation.navigate('Login', {name: 'Login'});
     console.log(auth().currentUser?.email);
   };
-
-  useEffect(() => {
-    fb();
-  }, [])
   
-
   return (
     <View style={styles.container}>
       <View style={styles.card}>
