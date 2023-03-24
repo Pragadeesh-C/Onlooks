@@ -34,8 +34,7 @@ function App() {
     </Stack.Navigator>
 
   </NavigationContainer>
-  // <Admin/>
-  // <Signup/>
+  // <Profile/>
   );
 }
 

@@ -26,10 +26,10 @@ const Login = ({navigation}) => {
           console.log("In", snapshot)
           if (snapshot.data().role == 'student') {
             console.log("Student")
-            navigation.navigate('Profile',{name:'Profile'});
+            navigation.navigate('Profile');
           } else {
-            console.log("Tecxher")
-            navigation.navigate('Attendance',{name:'Attendance'});
+            console.log("Techer")
+            navigation.navigate('Attendance');
           }
         });
       });
