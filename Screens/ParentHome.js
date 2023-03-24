@@ -6,9 +6,8 @@ import PushNotification from 'react-native-push-notification';
 
 
 const ParentHome = () => {
-  
 
-  const [Sid, setSid] = useState([])
+  const [Sid, setSid] = useState()
   const [studEmail, setStudEmail] = useState('');
 
 
@@ -25,17 +24,28 @@ const ParentHome = () => {
     },
   );
 
-
   useEffect(() => {
     var gmail = auth().currentUser.email
-    console.log(gmail)
     firestore().collection('Users').doc(gmail).get()
   .then(doc => {
     if (doc.exists) {
-      console.log(doc.data());
+      const Sid = doc.data().stud_email
+
+      firestore().collection('location').doc(Sid).get()
+      .then(docs => {
+        console.log(docs.data())
+        if(docs.data().reachedCollege == 'true'){
+          PushNotification.localNotification({
+            channelId: 'geofence-notifications',
+            title: 'Reached!!',
+            message: 'You have reached college',
+          });
+        }
+        else{
+          console.log("Not reached")
+        }
+      })
     } else {
-
-
       console.log('No such document!');
     }
   })
