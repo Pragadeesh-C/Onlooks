@@ -7,9 +7,9 @@ import auth from '@react-native-firebase/auth';
 const Teacher_signup = () => {
     const [emailID, setemailID] = useState('');
     const [password, setpassword] = useState('');
-  const fb = id => {
+  const fb = (id) => {
     firestore()
-      .collection('Users')
+      .collection('Users').doc(id)
       .set({
         email: id,
         role: 'teacher',

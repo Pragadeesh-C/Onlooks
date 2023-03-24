@@ -32,6 +32,10 @@ const Login = ({navigation}) => {
             console.log("Parent")
             auth().signInWithEmailAndPassword(userid,password).then(
               navigation.navigate('ParentHome'))              
+          }if (snapshot.data().role == 'teacher'){
+            console.log("teacher")
+            auth().signInWithEmailAndPassword(userid,password).then(
+              navigation.replace('Attendance'))              
           }
         });
       });

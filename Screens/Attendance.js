@@ -1,20 +1,22 @@
-import {StyleSheet, Text, View, FlatList} from 'react-native';
-import CheckBox from '@react-native-community/checkbox';
-import React, {useState, useEffect} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient';
+import { Attend } from '../Components/Attend';
+import Navbar from '../Components/Navbar';
 
-const Attendance = () => {
-  return <SafeAreaView style={styles.container}></SafeAreaView>;
+export const Attendance = () => {
+  return (
+    <LinearGradient colors={['#383875','#34346D','#33316A','#302D65','#2C2B5D','#353470', '#2E2C63', '#272657']} style={style.container}>
+      
+      <Attend/>
+      <Navbar />
+    </LinearGradient>
+    
+  );
 };
-
+const style=StyleSheet.create({
+  container:{
+    flex:1,
+  },
+})
 export default Attendance;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  list: {
-    flex: 1,
-    padding: 8,
-  },
-});

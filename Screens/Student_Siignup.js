@@ -7,14 +7,32 @@ import {useState} from 'react';
 const Student_Signup = ({navigation}) => {
     const [emailID, setemailID] = useState('');
     const [password, setpassword] = useState('');
-  const fb = async(id) => {
+    const [userName, setusername] = useState('');
+  const fb = async(id,emailID) => {
     console.log('Hi');
     await firestore()
       .collection('Users').doc(id)
       .set({
-        email: id,
+        name: id,
+        email: emailID,
         role: 'student',
         stat: 0,
+      })
+      .then(() => {
+        console.log('User added!');
+        navigation.navigate('Profile')
+      });
+  };
+  const fl = async(id,emailID) => {
+    console.log('Hi');
+    await firestore()
+      .collection('Student').doc(id)
+      .set({
+        name: id,
+        role: 'student',
+        stat: 0,
+        email:emailID,
+
       })
       .then(() => {
         console.log('User added!');
@@ -28,7 +46,8 @@ const Student_Signup = ({navigation}) => {
       .createUserWithEmailAndPassword(emailID, password)
       .then(() => {
         console.log('User added!');
-        fb(emailID);
+        fb(userName,emailID);
+        fl(userName,emailID);
       });
 
     console.log(auth().currentUser?.email);
@@ -63,6 +82,19 @@ const Student_Signup = ({navigation}) => {
             placeholder="Password"
             value={password}
             onChangeText={Text => setpassword(Text)}
+            secureTextEntry={true}
+            style={{
+              height: 40,
+              borderColor: 'gray',
+              borderWidth: 1,
+              marginTop: 40,
+              marginHorizontal: 10,
+            }}
+          />
+          <TextInput
+            placeholder="username"
+            value={userName}
+            onChangeText={Text => setusername(Text)}
             secureTextEntry={true}
             style={{
               height: 40,
