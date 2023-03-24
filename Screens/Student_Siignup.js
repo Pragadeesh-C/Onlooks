@@ -4,20 +4,21 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import {useState} from 'react';
 
-const Student_Signup = () => {
+const Student_Signup = ({navigation}) => {
     const [emailID, setemailID] = useState('');
     const [password, setpassword] = useState('');
-  const fb = id => {
+  const fb = async(id) => {
     console.log('Hi');
-    firestore()
-      .collection('Users')
-      .add({
-        id: id,
+    await firestore()
+      .collection('Users').doc(id)
+      .set({
+        email: id,
         role: 'student',
         stat: 0,
       })
       .then(() => {
         console.log('User added!');
+        navigation.navigate('Profile')
       });
   };
 
@@ -30,7 +31,6 @@ const Student_Signup = () => {
         fb(emailID);
       });
 
-    // navigation.navigate('Login', {name: 'Login'});
     console.log(auth().currentUser?.email);
   };
 

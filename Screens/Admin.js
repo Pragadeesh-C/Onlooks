@@ -1,30 +1,92 @@
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '../Components/Button';
+import { PermissionsAndroid } from 'react-native';
+import auth from '@react-native-firebase/auth'
 
-const Admin = ({navigation}) => {
+const Admin = ({ navigation }) => {
+
+  useEffect(() => {
+    getLocationPermissions()
+    const unsubscribe = auth().onAuthStateChanged((user) => {
+      console.log("login", user);
+      if (user) {
+        const userid = auth().currentUser.email
+        const user = firestore()
+          .collection('Users')
+          .where('email', 'in', [userid])
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(snapshot => {
+              console.log("In", snapshot)
+              if (snapshot.data().role == 'student') {
+                console.log("Student")
+                navigation.navigate('Profile')
+              } if (snapshot.data().role == 'parent') {
+                console.log("Parent")
+                navigation.navigate('ParentHome')
+              }
+            });
+          });
+
+      }
+      else {
+        console.log("Not logged in")
+
+      }
+    })
+    return unsubscribe
+  }, [])
+
+  const getLocationPermissions = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          'title': 'Example App',
+          'message': 'Example App access to your location '
+        }
+      )
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use the location")
+      } else {
+        console.log("location permission denied")
+        alert("Location permission denied");
+      }
+    } catch (err) {
+      console.warn(err)
+    }
+  }
+
   return (
     <View style={styles.container}>
       <Text>@Admin Dashboard</Text>
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate('Student_Signup', {name: 'Student_Signup'})
+          navigation.navigate('Student_Signup', { name: 'Student_Signup' })
         }>
         <Text style={styles.text}>Create Student</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate('Teacher_signup', {name: 'Teacher_signup'})
+          navigation.navigate('ParentSignup')
+        }>
+        <Text style={styles.text}>Create Parent</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() =>
+          navigation.navigate('Teacher_signup', { name: 'Teacher_signup' })
         }>
         <Text style={styles.text}>Create Teacher</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.button}
         onPress={() =>
-          navigation.navigate('Login', {name: 'Login'})
+          navigation.navigate('Login', { name: 'Login' })
         }>
         <Text style={styles.text}>Login</Text>
       </TouchableOpacity>

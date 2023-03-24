@@ -16,20 +16,22 @@ const Login = ({navigation}) => {
   const [password, setpassword] = useState('');
 
   const LoginAuth = async () => {
-    console.log("Hi")
+    console.log("Login")
     firestore()
       .collection('Users')
-      .where('id', 'in', [userid])
+      .where('email', 'in', [userid])
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(snapshot => {
           console.log("In", snapshot)
           if (snapshot.data().role == 'student') {
             console.log("Student")
-            navigation.navigate('Profile');
-          } else {
-            console.log("Techer")
-            navigation.navigate('Attendance');
+            auth().signInWithEmailAndPassword(userid,password).then(
+            navigation.navigate('Profile'))
+          }  if (snapshot.data().role == 'parent'){
+            console.log("Parent")
+            auth().signInWithEmailAndPassword(userid,password).then(
+              navigation.navigate('ParentHome'))              
           }
         });
       });

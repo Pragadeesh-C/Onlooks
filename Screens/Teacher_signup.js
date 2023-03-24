@@ -10,8 +10,8 @@ const Teacher_signup = () => {
   const fb = id => {
     firestore()
       .collection('Users')
-      .add({
-        id: id,
+      .set({
+        email: id,
         role: 'teacher',
         stat: 0,
       })

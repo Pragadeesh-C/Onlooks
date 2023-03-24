@@ -1,8 +1,6 @@
 // 
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View ,TextInput,Button} from 'react-native'
-import firebase from '@react-native-firebase/app';
-import 'firebase/auth';
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -13,6 +11,8 @@ import Admin from './Screens/Admin';
 import Student_Signup from './Screens/Student_Siignup';
 import Teacher_signup from './Screens/Teacher_signup';
 import Profile from './Screens/Profile';
+import ParentSignup from './Screens/ParentSignup';
+import ParentHome from './Screens/ParentHome';
 
 
 
@@ -30,6 +30,8 @@ function App() {
       <Stack.Screen name="Admin" component={Admin} />
       <Stack.Screen name="Student_Signup" component={Student_Signup} />
       <Stack.Screen name="Teacher_signup" component={Teacher_signup} />
+      <Stack.Screen name="ParentSignup" component={ParentSignup} />
+      <Stack.Screen name="ParentHome" component={ParentHome} />
       <Stack.Screen name="Profile" component={Profile} />
     </Stack.Navigator>
 
