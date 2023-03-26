@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View, } from 'react-native';
+
 import { ActivityIndicator } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import Cb from './Cb';
 
 const StdData = () => {
   const [loading, setLoading] = useState(true);
   const [users, setUsers] = useState([]);
+  
 
   useEffect(() => {
     const unsubscribe = firestore()
@@ -30,8 +33,10 @@ const StdData = () => {
   const renderUser = ({ item }) => (
     <View style={styles.component}>
       <Text style={styles.txt}>{item.email}</Text>
-      <Text style={styles.txt}>{item.name}</Text>
-      <Text style={styles.txt}>{item.status}</Text>
+      <Text style={styles.txt1}>{item.name}</Text>
+      <Cb />
+      
+      {/* <Text style={styles.txt}>{item.status}</Text> */}
     </View>
   );
 
@@ -54,10 +59,16 @@ const styles = StyleSheet.create({
   txt: {
     color: 'black',
     margin:5,
+    textAlign:"right",
+  },
+  txt1:{
+    textAlign:"left",
   },
   component: {
+    alignItems:'center',
+    marginRight:50,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent:"space-around",
   },
 });
 

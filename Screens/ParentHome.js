@@ -33,7 +33,7 @@ const ParentHome = () => {
 
       firestore().collection('location').doc(Sid).get()
       .then(docs => {
-        console.log(docs.data())
+        console.log("parent docs",docs.data().reachedCollege)
         if(docs.data().reachedCollege == 'true'){
           PushNotification.localNotification({
             channelId: 'geofence-notifications',

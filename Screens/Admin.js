@@ -9,34 +9,6 @@ const Admin = ({ navigation }) => {
 
   useEffect(() => {
     getLocationPermissions()
-    const unsubscribe = auth().onAuthStateChanged((user) => {
-      console.log("login", user);
-      if (user) {
-        const userid = auth().currentUser.email
-        const user = firestore()
-          .collection('Users')
-          .where('email', 'in', [userid])
-          .get()
-          .then(querySnapshot => {
-            querySnapshot.forEach(snapshot => {
-              console.log("In", snapshot)
-              if (snapshot.data().role == 'student') {
-                console.log("Student")
-                navigation.navigate('Profile')
-              } if (snapshot.data().role == 'parent') {
-                console.log("Parent")
-                navigation.navigate('ParentHome')
-              }
-            });
-          });
-
-      }
-      else {
-        console.log("Not logged in")
-
-      }
-    })
-    return unsubscribe
   }, [])
 
   const getLocationPermissions = async () => {

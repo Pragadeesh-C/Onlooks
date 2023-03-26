@@ -3,16 +3,19 @@ import React from 'react';
 import {useState} from 'react';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import CryptoJS from "react-native-crypto-js";
+
 
 const Teacher_signup = () => {
     const [emailID, setemailID] = useState('');
     const [password, setpassword] = useState('');
-  const fb = (id) => {
+
+  const fb = (id,role) => {
     firestore()
       .collection('Users').doc(id)
       .set({
         email: id,
-        role: 'teacher',
+        role: role,
         stat: 0,
       })
       .then(() => {
@@ -21,14 +24,14 @@ const Teacher_signup = () => {
   };
 
   const LoginAuth = async () => {
+    let role = CryptoJS.AES.encrypt('teacher', 'SecretKeyDes').toString();
     await auth()
       .createUserWithEmailAndPassword(emailID, password)
       .then(() => {
         console.log('User added!');
-        fb(emailID);
+        fb(emailID,role);
       });
 
-    // navigation.navigate('Login', {name: 'Login'});
     console.log(auth().currentUser?.email);
   };
   return (
